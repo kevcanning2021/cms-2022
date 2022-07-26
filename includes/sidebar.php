@@ -21,14 +21,15 @@
     <div class="row">
         <div class="col-lg-12">
 <?php
-                    $query = "SELECT * FROM categories LIMIT 3";
+                    $query = "SELECT * FROM categories";
                     $categories = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($categories)) {
+                        $id = $row['id'];
                         $title = $row['title'];
                         
                         echo "<ul class='list-unstyled'>";
-                        echo "<li><a href='#'>$title</a></li>";
+                        echo "<li><a href='category.php?category=$id'>$title</a></li>";
                         echo "</ul>";
                     }
                     ?>

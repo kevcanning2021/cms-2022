@@ -20,13 +20,12 @@
     if(isset($_POST['update'])) {
         $update_title = $_POST['title'];
         $id = $_GET['edit'];
-        var_dump(isset($_POST['update']));
+        
         $query = "UPDATE categories SET title = '{$update_title}' WHERE id = $id";
         $update_query = mysqli_query($connection, $query);
-        var_dump($query);
-        if(!$update_query){
-            die("query failed" . mysqli_error($connection));
-        }
+        
+        confirm_query($update_query);
+        
         header("Location: categories.php");
     }
     ?>
