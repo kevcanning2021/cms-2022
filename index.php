@@ -11,6 +11,7 @@
         <div class="col-md-8">
             <?php
                     $query = "SELECT * FROM posts";
+                    
                     $posts = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($posts)) {
@@ -19,9 +20,14 @@
                         $author = $row['author'];
                         $date = $row['date'];
                         $image = $row['image'];
-                        $content = substr($row['content'],0,100);   
-            ?>
+                        $content = substr($row['content'],0,100);  
+                        $status = $row['status']; 
 
+                        if($status !== 'published') {
+                            echo " <h1 class='text-center'>Sorry, there are no published posts avaliable.</h1>";
+                        } else {
+            ?>
+            
             <h1 class="page-header">
                 Page Heading
                 <small>Secondary Text</small>
@@ -43,7 +49,9 @@
             </p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             <hr>
-            <?php } ?>           
+            <?php 
+            } 
+        }?>           
         </div>
 
         <!-- Blog Sidebar Widgets Column -->

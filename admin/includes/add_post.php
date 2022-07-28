@@ -1,5 +1,6 @@
 <?php
     if(isset($_POST['create_post'])) {
+        $id = $_GET['p_id'];
         $title = $_POST['title'];
         $author = $_POST['author'];
         $category_id = $_POST['category_id'];
@@ -11,12 +12,12 @@
         $tags = $_POST['tags'];
         $content = $_POST['content'];
         $date = date('d-m-y');
-        $comment_count = 4;
+        // $comment_count = 4;
 
         move_uploaded_file($image_tmp, "../images/$image");
 
-        $query = "INSERT INTO posts(category_id,title,author,date,image,content,tags,comment_count,status)";
-        $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$comment_count}', '{$status}')";
+        $query = "INSERT INTO posts(category_id,title,author,date,image,content,tags,status)";
+        $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$status}')";
         
         $create_post = mysqli_query($connection, $query);
 
