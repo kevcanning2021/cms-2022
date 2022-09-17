@@ -4,6 +4,8 @@ if(isset($_GET['p_id'])) {
 }
                 $query = "SELECT * FROM posts WHERE id={$id}";
                 $query_by_id = mysqli_query($connection, $query);
+
+                confirm_query($query_by_id);
             
                 while($row = mysqli_fetch_assoc($query_by_id)) { 
                     $id = $row['id']; 
