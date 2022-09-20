@@ -27,7 +27,7 @@ session_start();
         }
 
         if($username === $db_user_name && $password === $db_password) {
-            $_SESSION['username'] = $db_user_name;
+                 $_SESSION['username'] = $db_user_name;
             $_SESSION['firstname'] = $db_first_name;
             $_SESSION['lastname'] = $db_last_name;
             $_SESSION['role'] = $db_role;
