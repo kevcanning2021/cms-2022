@@ -148,18 +148,26 @@
             </div>
             <!-- /.row -->
             <?php
-        $query = "SELECT * FROM POSTS WHERE status = 'draft'";
-        $select_all_draft_posts = mysqli_query($connection, $query);
-        $post_draft_count = mysqli_num_rows($select_all_draft_posts);
+                    $query = "SELECT * FROM POSTS";
+                    $select_all_posts = mysqli_query($connection, $query);
+                    $post_count = mysqli_num_rows($select_all_posts);
 
-        $query = "SELECT * FROM COMMENTS WHERE status = 'unapproved'";
-        $select_all_unapproved_comments = mysqli_query($connection, $query);
-        $unpproved_comments_count = mysqli_num_rows($select_all_unapproved_comments);
+                    $query = "SELECT * FROM POSTS WHERE status = 'published'";
+                    $select_all_published_posts = mysqli_query($connection, $query);
+                    $published_posts_count = mysqli_num_rows($select_all_published_posts);
 
-        $query = "SELECT * FROM USERS WHERE role = 'subscriber'";
-        $select_all_subscribers = mysqli_query($connection, $query);
-        $subscriber_count = mysqli_num_rows($select_all_subscribers);
-?>
+                    $query = "SELECT * FROM POSTS WHERE status = 'draft'";
+                    $select_all_draft_posts = mysqli_query($connection, $query);
+                    $post_draft_count = mysqli_num_rows($select_all_draft_posts);
+
+                    $query = "SELECT * FROM COMMENTS WHERE status = 'unapproved'";
+                    $select_all_unapproved_comments = mysqli_query($connection, $query);
+                    $unpproved_comments_count = mysqli_num_rows($select_all_unapproved_comments);
+
+                    $query = "SELECT * FROM USERS WHERE role = 'subscriber'";
+                    $select_all_subscribers = mysqli_query($connection, $query);
+                    $subscriber_count = mysqli_num_rows($select_all_subscribers);
+            ?>
             <div class="row">
                 <script type="text/javascript">
                 google.charts.load('current', {
@@ -171,14 +179,13 @@
                     var data = google.visualization.arrayToDataTable([
                         ['Data ', 'Count'],
                         <?php
-            $element_text = ['Active Posts', 'Comments', 'Users', 'Categories', 'Draft Posts', 'Unapproved Comments', 'Subscribers'];
-            $element_value = [$post_count, $comment_count, $user_count, $categories_count, $post_draft_count, $unpproved_comments_count, $subscriber_count];
+                            $element_text = ['All Posts', 'Active Posts', 'Comments', 'Users', 'Categories', 'Draft Posts', 'Unapproved Comments', 'Subscribers'];
+                            $element_value = [$post_count, $published_posts_count, $comment_count, $user_count, $categories_count, $post_draft_count, $unpproved_comments_count, $subscriber_count];
 
-            for($i = 0; $i < 7; $i++){
-                echo "['{$element_text[$i]}'" . "," . "{$element_value[$i]}],";
-            }
-          ?>
-                        //   ['Posts', 1000]
+                            for($i = 0; $i < 8; $i++){
+                                echo "['{$element_text[$i]}'" . "," . "{$element_value[$i]}],";
+                            }
+                        ?>
                     ]);
 
                     var options = {

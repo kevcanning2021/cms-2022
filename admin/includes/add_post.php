@@ -1,6 +1,5 @@
 <?php
     if(isset($_POST['create_post'])) {
-        $id = $_GET['p_id'];
         $title = $_POST['title'];
         $author = $_POST['author'];
         $category_id = $_POST['category_id'];
@@ -12,16 +11,20 @@
         $tags = $_POST['tags'];
         $content = $_POST['content'];
         $date = date('d-m-y');
-        // $comment_count = 4;
+        $comment_count = 0;
 
         move_uploaded_file($image_tmp, "../images/$image");
 
-        $query = "INSERT INTO posts(category_id,title,author,date,image,content,tags,status)";
-        $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$status}')";
+        $query = "INSERT INTO posts(category_id,title,author,date,image,content,tags,comment_count,status)";
+        $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$comment_count}', '{$status}')";
         
         $create_post = mysqli_query($connection, $query);
 
         confirm_query($create_post);
+
+        $id = mysqli_insert_id($connection);
+
+        echo "<p class='bg-success'>Post created successfully. <a href='../post.php?p_id={$id}'>View Post</a> OR <a href='posts.php'>Edit other posts</a><p>";
     }
 ?>
 
@@ -58,7 +61,11 @@
 
     <div class="form-group">
         <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status">
+        <select name="status" id="" class="form-control">
+            <option value="draft">Select Options</option>
+            <option value="published">Publish</option>
+            <option value="draft">Draft</option>
+        </select>
     </div>
 
     <div class="form-group">
@@ -73,7 +80,7 @@
 
     <div class="form-group">
         <label for="content">Post Content</label>
-        <textarea class="form-control" name="content" id="" cols="30" rows="10"></textarea>
+        <textarea class="form-control" name="content" id="summernote" cols="30" rows="10"></textarea>
     </div>
 
     <div class="form-group">

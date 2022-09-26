@@ -222,3 +222,7 @@ ul.alert-dropdown {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+#bulk_options_container {
+    padding: 0px;
+}

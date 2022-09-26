@@ -19,6 +19,8 @@
         $create_user = mysqli_query($connection, $query);
 
         confirm_query($create_user);
+
+        echo "User created successfully: <a href='users.php'>View User</a><br><br>";
     }
 ?>
 
@@ -55,7 +57,7 @@
 
     <div class="form-group">
         <label for="role">Role</label>
-        <select name="role" id="" class="form-group form-control">
+        <select name="role" id="summernote" class="form-group form-control">
             <option value="subscriber">Select a option</option>
             <option value="admin">Admin</option>
             <option value="subscriber">Subscriber</option>

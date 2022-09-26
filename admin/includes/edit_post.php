@@ -60,6 +60,8 @@ if(isset($_GET['p_id'])) {
                     $update_query = mysqli_query($connection, $query);
 
                     confirm_query($update_query);
+
+                    echo "<p class='bg-success'>Post updated successfully. <a href='../post.php?p_id={$id}'>View Post</a> OR <a href='posts.php'>Edit other posts</a><p>";
                 }
 ?>
 
@@ -95,8 +97,19 @@ if(isset($_GET['p_id'])) {
     </div>
 
     <div class="form-group">
-        <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status" value="<?php echo $status; ?>">
+        <label for="status">Status</label>
+        <select name="status" id="" class="form-group form-control">
+            <option value="<?php echo $status; ?>"><?php echo $status; ?></option>
+            
+            <?php
+            if($status == 'published') {
+                echo '<option value="draft">Draft</option>';
+            } else {
+                echo '<option value="published">Publish</option>';
+            }
+
+            ?>
+        </select>
     </div>
 
     <div class="form-group">
@@ -113,7 +126,7 @@ if(isset($_GET['p_id'])) {
 
     <div class="form-group">
         <label for="content">Post Content</label>
-        <textarea class="form-control" name="content" id="" cols="30" rows="10"><?php echo $content; ?></textarea>
+        <textarea class="form-control" name="content" id="summernote" cols="30" rows="10"><?php echo $content; ?></textarea>
     </div>
 
     <div class="form-group">

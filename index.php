@@ -42,12 +42,12 @@
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $date; ?></p>
             <hr>
-            <img class="img-responsive" src="images/<?php echo $image; ?>" alt="">
+            <a href="post.php?p_id=<?php echo $id; ?>"><img class="img-responsive" src="images/<?php echo $image; ?>" alt=""></a>
             <hr>
             <p>
                 <?php echo $content; ?>
             </p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="post.php?p_id=<?php echo $id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             <hr>
             <?php 
             } 

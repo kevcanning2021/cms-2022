@@ -24,21 +24,6 @@
             $password = $_POST['password']; 
             $role = $_POST['role']; 
 
-            // $image = $_FILES['image']['name'];
-            // $image_tmp = $_FILES['image']['tmp_name'];
-
-            // move_uploaded_file($image_tmp, "../images/$image");
-
-            // if(empty($image)) {
-            //     $query = "SELECT * FROM users WHERE id = '{$id}'";
-
-            //     $image_query = mysqli_query($connection, $query);
-
-            //     while($row = mysqli_fetch_assoc($image_query)) {
-            //         $image = $row['image'];
-            //     }
-            // }
-
             $query = "UPDATE users SET ";
             $query .= "username = '{$username}', ";
             $query .= "firstname = '{$firstname}', ";
@@ -94,11 +79,6 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="password" value="<?php echo $password; ?>">
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label for="image">User Image</label>
-                            <img src="../images/<?php echo $image; ?>" alt="">
-                        </div> -->
 
                         <div class="form-group">
                             <label for="role">Role</label>

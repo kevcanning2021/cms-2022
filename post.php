@@ -45,7 +45,7 @@
             <p>
                 <?php echo $content; ?>
             </p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            
             <hr>
             <?php } 
                 if(isset($_POST['create_comment'])) {
@@ -55,13 +55,17 @@
                     $email = $_POST['email'];
                     $comment = $_POST['comment'];
 
-                    $query = "INSERT INTO comments (post_id, author, content, email, status, date) ";
-                    $query .= "VALUES ('{$id}', '{$author}', '{$comment}', '{$email}', 'unapproved', now())";
-
-                    $create_query = mysqli_query($connection, $query);
-                    
-                    if(!isset($create_query)) {
-                        die('query failed: ' . mysqli_error($connection));
+                    if(!empty($author) && !empty($email) && !empty($comment)) {
+                        $query = "INSERT INTO comments (post_id, author, content, email, status, date) ";
+                        $query .= "VALUES ('{$id}', '{$author}', '{$comment}', '{$email}', 'unapproved', now())";
+    
+                        $create_query = mysqli_query($connection, $query);
+                        
+                        if(!isset($create_query)) {
+                            die('query failed: ' . mysqli_error($connection));
+                        }   
+                    } else {
+                        echo "<script>alert('Fields can not be empty.');</script>";
                     }
 
                     $query = "UPDATE posts SET comment_count = comment_count + 1 ";
