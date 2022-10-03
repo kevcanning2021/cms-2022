@@ -22,6 +22,8 @@
         $row = mysqli_fetch_array($select_randsalt_query);
         $randsalt = $row['randSalt'];
 
+        $password = crypt($password, $randsalt);
+
         $query = "INSERT INTO users (username, email, password, role) ";
         $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber')";
         $register_query = mysqli_query($connection, $query);
@@ -38,8 +40,6 @@
         $message = "";
     }
  ?>
-
-
     <!-- Navigation -->
     
     <?php  include "includes/navigation.php"; ?>
