@@ -20,7 +20,9 @@
 
         confirm_query($create_user);
 
-        echo "User created successfully: <a href='users.php'>View User</a><br><br>";
+        $id = mysqli_insert_id($connection);
+
+        echo "User created successfully: <a href='users.php?u_id={$id}'>View User</a><br><br>";
     }
 ?>
 
@@ -47,7 +49,7 @@
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" name="password">
+        <input type="password" class="form-control" name="password">
     </div>
 
     <div class="form-group">
@@ -57,7 +59,7 @@
 
     <div class="form-group">
         <label for="role">Role</label>
-        <select name="role" id="summernote" class="form-group form-control">
+        <select name="role" id="" class="form-group form-control">
             <option value="subscriber">Select a option</option>
             <option value="admin">Admin</option>
             <option value="subscriber">Subscriber</option>
