@@ -13,9 +13,9 @@
             if(isset($_GET['category'])){
                 $category_id = $_GET['category'];
             }
-                    $query = "SELECT * FROM posts WHERE id = $category_id";
+                    $query = "SELECT * FROM posts WHERE category_id = $category_id";
                     $posts = mysqli_query($connection, $query);
-
+// echo $category_id;
                     while($row = mysqli_fetch_assoc($posts)) {
                         $id = $row['id'];
                         $title = $row['title'];
