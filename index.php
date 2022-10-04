@@ -10,23 +10,42 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <?php
-                    $query = "SELECT * FROM posts";
-                    
-                    $posts = mysqli_query($connection, $query);
+            $per_page = 5;
 
-                    while($row = mysqli_fetch_assoc($posts)) {
-                        $id = $row['id'];
-                        $title = $row['title'];
-                        $author = $row['author'];
-                        $date = $row['date'];
-                        $image = $row['image'];
-                        $content = substr($row['content'],0,100);  
-                        $status = $row['status']; 
+            if(isset($_GET['page'])) {
+                $page = $_GET['page'];
+            } else {
+                $page = "";
+            }
 
-                        if($status !== 'published') {
-                            echo " <h1 class='text-center'>Sorry, there are no published posts avaliable.</h1>";
-                        } else {
-            ?>
+            if($page == "" || $page == 1) {
+                $page_1 = 0;
+            } else {
+                $page_1 = ($page * $per_page) - $per_page;
+            }
+
+            $query = "SELECT * FROM posts";                    
+            $count_posts_query = mysqli_query($connection, $query);
+            $num_count = mysqli_num_rows($count_posts_query);
+            
+            $post_per_page = ceil($num_count / $per_page);
+
+            $query = "SELECT * FROM posts LIMIT $page_1, $per_page";                    
+            $posts = mysqli_query($connection, $query);
+
+            while($row = mysqli_fetch_assoc($posts)) {
+                $id = $row['id'];
+                $title = $row['title'];
+                $author = $row['author'];
+                $date = $row['date'];
+                $image = $row['image'];
+                $content = substr($row['content'],0,100);  
+                $status = $row['status']; 
+
+                if($num_count == 0) {
+                    echo " <h1 class='text-center'>Sorry, there are no published posts avaliable.</h1>";
+                } else {
+    ?>
             
             <h1 class="page-header">
                 Page Heading
@@ -59,5 +78,18 @@
     </div>
 
     <hr>
+
+    <ul class="pager">
+        <?php
+            for($i = 1; $i <= $post_per_page; $i++) {
+                if($i == $page) {
+                    echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                } else {
+                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                }
+            }
+
+        ?>
+    </ul>
     <!-- Footer -->
     <?php include "includes/footer.php"; ?>
