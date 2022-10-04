@@ -12,8 +12,14 @@
             <?php
                     if(isset($_GET['p_id'])) {
                         $id = $_GET['p_id'];
-                    }
 
+                    $view_count_query = "UPDATE posts SET views_count = views_count + 1 WHERE id = {$id}";
+                    $view_count_update = mysqli_query($connection, $view_count_query);
+
+                    if(!$view_count_query) {
+                        die("Query failed: " . mysqli_error($connection));
+                    }
+                    
                     $query = "SELECT * FROM posts WHERE id = {$id}";
                     $posts = mysqli_query($connection, $query);
 
@@ -48,6 +54,9 @@
             
             <hr>
             <?php } 
+            } else {
+                header("Location: index.php");
+            }
                 if(isset($_POST['create_comment'])) {
                     $id = $_GET['p_id'];
 
@@ -76,6 +85,8 @@
                     if(!isset($update_comment_count)) {
                         die('query failed: ' . mysqli_error($connection));
                     }
+
+                    header("Location: /post.php?p_id={$id}");
                 }
             ?>
 

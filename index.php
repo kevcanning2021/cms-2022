@@ -38,7 +38,7 @@
                 <a href="post.php?p_id=<?php echo $id; ?>"><?php echo $title; ?></a>
             </h2>
             <p class="lead">
-                by <a href="index.php"><?php echo $author; ?></a>
+                by <a href="author_posts.php?author=<?php echo $author; ?>&p_id=<?php echo $id; ?>"><?php echo $author; ?></a>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $date; ?></p>
             <hr>

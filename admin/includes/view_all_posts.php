@@ -19,6 +19,28 @@
                     $delete_post = mysqli_query($connection, $query);
                     confirm_query($delete_post);
                     break;
+                case 'clone': 
+                    $query = "SELECT * FROM posts WHERE id = {$checkbox}";
+                    $clone_posts = mysqli_query($connection, $query);
+
+                    while($row = mysqli_fetch_array($clone_posts)) {
+                        $title = $row['title'];
+                        $author = $row['author'];
+                        $category_id = $row['category_id'];
+                        $status = $row['status'];                    
+                        $image = $row['image'];
+                        $tags = $row['tags'];
+                        $content = $row['content'];
+                        $date = date('d-m-y');
+                        $comment_count = 0;
+                    }
+                    $query = "INSERT INTO posts(category_id,title,author,date,image,content,tags,comment_count,status)";
+                    $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$comment_count}', '{$status}')";
+                    
+                    $create_post = mysqli_query($connection, $query);
+            
+                    confirm_query($create_post);
+                    break;
             }
         }
     }
@@ -32,6 +54,7 @@
             <option value="published">Publish</option>
             <option value="draft">Draft</option>
             <option value="delete">Delete</option>
+            <option value="clone">Clone</option>
         </select>
     </div>
     <div class="col-xs-4">
@@ -48,6 +71,7 @@
             <th>Image</th>
             <th>Tags</th>
             <th>Comments</th>
+            <th>Views</th>
             <th>Date</th>
             <th>View Post</th>
             <th>Action</th>
@@ -55,7 +79,7 @@
     </thead>
     <tbody>
         <?php
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts ORDER BY id DESC";
             $all_posts_query = mysqli_query($connection, $query);
         
             while($row = mysqli_fetch_assoc($all_posts_query)) { 
@@ -66,7 +90,8 @@
                 $image = $row['image']; 
                 $tags = $row['tags']; 
                 $comment_count = $row['comment_count']; 
-                $date = $row['date']; 
+                $views_count = $row['views_count'];
+                $date = $row['date'];  
 
                 echo "<tr>";
                 echo "<td><input class='check_boxes' type='checkbox' name='checkbox_array[]' value='{$id}'></td>";
@@ -86,19 +111,21 @@
                 echo "<td><img src='../images/{$image}' class='img-responsive' style='width:100px;'/></td>";
                 echo "<td>{$tags}</td>";
                 echo "<td>{$comment_count}</td>";
+                echo "<td>{$views_count}</td>";
                 echo "<td>{$date}</td>";
                 echo "<td>
                 <a href='../post.php?p_id={$id}'>View Post</a></td>";
                 echo "<td>
                 <a href='posts.php?source=edit_post&p_id={$id}'>Edit</a><br>
-                <a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \" href='posts.php?delete={$id}'>Delete</a></td>";
+                <a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \" href='posts.php?delete={$id}'>Delete</a><br>
+                <a href='posts.php?reset_post_count={$id}'>Reset Post Count</a></td>";
                 echo "</tr>";
             } ?>
     </tbody>
 </table>
 </form>
 
-<?php
+<?php 
     if(isset($_GET['delete'])) {
        $id = $_GET['delete'];
        
@@ -107,4 +134,13 @@
        
        header("Location: posts.php");
     }
+    
+    if(isset($_GET['reset_post_count'])) {
+        $id = $_GET['reset_post_count'];
+        
+        $query = "UPDATE posts SET views_count = 0 WHERE id =" . mysqli_real_escape_string($connection, $_GET['reset_post_count']);
+        $reset_query = mysqli_query($connection, $query);
+        
+        header("Location: posts.php");
+     }
 ?>
