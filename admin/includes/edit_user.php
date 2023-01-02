@@ -1,8 +1,10 @@
 <?php
 if(isset($_GET['u_id'])) {
     $id = $_GET['u_id'];
-}
-                $query = "SELECT * FROM users WHERE id={$id}";
+} else {
+    header("Location: index.php");
+} 
+                $query = "SELECT * FROM users WHERE id = {$id}";
                 $query_by_id = mysqli_query($connection, $query);
 
                 confirm_query($query_by_id);
@@ -26,46 +28,32 @@ if(isset($_GET['u_id'])) {
                     $password = $_POST['password']; 
                     $role = $_POST['role']; 
 
-                    // $image = $_FILES['image']['name'];
-                    // $image_tmp = $_FILES['image']['tmp_name'];
+                    if(!empty($password)) {
+                        $get_user = mysqli_query($connection, $query);
 
-                    // move_uploaded_file($image_tmp, "../images/$image");
+                        confirm_query($get_user);
 
-                    // if(empty($image)) {
-                    //     $query = "SELECT * FROM users WHERE id = '{$id}'";
+                        $row = mysqli_fetch_array($get_user);
 
-                    //     $image_query = mysqli_query($connection, $query);
-
-                    //     while($row = mysqli_fetch_assoc($image_query)) {
-                    //         $image = $row['image'];
-                    //     }
-                    // };
-
-                    $query = "SELECT randSalt FROM users";
-                    $randsalt_query = mysqli_query($connection, $query);
-
-                    if(!$randsalt_query) {
-                        die("Query failed: " . mysqli_error($connection));
+                        $db_password = $row['password'];
                     }
 
-                    $row = mysqli_fetch_array($randsalt_query);
-                    $salt = $row['randSalt'];
-                    $hashed_password = crypt($password, $salt);
+                        if($db_password!= $password) {
+                            $hashed_password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+                        }
 
-                    $query = "UPDATE users SET ";
-                    $query .= "username = '{$username}', ";
-                    $query .= "firstname = '{$firstname}', ";
-                    $query .= "lastname = '{$lastname}', ";
-                    $query .= "email = '{$email}', ";
-                    $query .= "password = '{$hashed_password}', ";
-                    $query .= "role = '{$role}', ";
-                    $query .= "image = '{$image}' ";
-                    $query .= "WHERE id = '{$id}'";
+                        $query = "UPDATE users SET ";
+                        $query .= "username = '{$username}', ";
+                        $query .= "firstname = '{$firstname}', ";
+                        $query .= "lastname = '{$lastname}', ";
+                        $query .= "email = '{$email}', ";
+                        $query .= "password = '{$hashed_password}', ";
+                        $query .= "role = '{$role}', ";
+                        $query .= "image = '{$image}' ";
+                        $query .= "WHERE id = '{$id}'";
 
-                    $update_query = mysqli_query($connection, $query);
-
-                    confirm_query($update_query);
-                }
+                        $update_query = mysqli_query($connection, $query);
+                }            
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -91,24 +79,12 @@ if(isset($_GET['u_id'])) {
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" value="<?php echo $password; ?>">
+        <input type="password" class="form-control" name="password" autocomplete="off">
     </div>
 
     <div class="form-group">
         <label for="image">User Image</label>
         <img src="../images/<?php echo $image; ?>" alt="">
-    </div>
-
-    <div class="form-group">
-        <label for="role">Role</label>
-        <select name="role" id="" class="form-group form-control">
-        <option value="<?php echo $role; ?>"><?php echo $role; ?></option>
-            <?php if($role == 'admin'){
-                echo '<option value="subscriber">Subscriber</option>';
-            } else {
-                echo '<option value="admin">Admin</option>';
-            } ?>
-        </select>
     </div>
 
     <div class="form-group">

@@ -5,6 +5,8 @@
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+
+        $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
         
         $image = $_FILES['image']['name'];
         $image_tmp = $_FILES['image']['tmp_name'];

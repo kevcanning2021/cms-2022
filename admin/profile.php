@@ -24,12 +24,14 @@
             $password = $_POST['password']; 
             $role = $_POST['role']; 
 
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
             $query = "UPDATE users SET ";
             $query .= "username = '{$username}', ";
             $query .= "firstname = '{$firstname}', ";
             $query .= "lastname = '{$lastname}', ";
             $query .= "email = '{$email}', ";
-            $query .= "password = '{$password}', ";
+            $query .= "password = '{$hashed_password}', ";
             $query .= "role = '{$role}' ";
             $query .= "WHERE username = '{$username}'";
 
@@ -77,7 +79,7 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" value="<?php echo $password; ?>">
+                            <input type="password" class="form-control" name="password" autocomplete="off">
                         </div>
 
                         <div class="form-group">
