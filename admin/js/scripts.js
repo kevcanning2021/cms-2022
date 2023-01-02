@@ -24,3 +24,13 @@ $(document).ready(function() {
     $(this).remove();
   });
 });
+
+function loadUsersOnline() {
+  $.get("functions.php?usersonline=result", function(data) {
+    $(".usersonline").text(data);
+  })
+}
+
+setInterval(function(){
+  loadUsersOnline();
+}, 500);
