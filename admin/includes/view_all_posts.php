@@ -89,7 +89,6 @@
                 $status = $row['status']; 
                 $image = $row['image']; 
                 $tags = $row['tags']; 
-                $comment_count = $row['comment_count']; 
                 $views_count = $row['views_count'];
                 $date = $row['date'];  
 
@@ -99,9 +98,9 @@
                 echo "<td>{$author}</td>";
 
                 $query = "SELECT * FROM categories WHERE id = {$category_id}";
-                $edit_query = mysqli_query($connection, $query);
+                $category_query = mysqli_query($connection, $query);
         
-                while($row = mysqli_fetch_assoc($edit_query)) { 
+                while($row = mysqli_fetch_assoc($category_query)) { 
                     $title = $row['title']; 
 
                     echo "<td>{$title}</td>";
@@ -110,7 +109,15 @@
                 echo "<td>{$status}</td>";
                 echo "<td><img src='../images/{$image}' class='img-responsive' style='width:100px;'/></td>";
                 echo "<td>{$tags}</td>";
-                echo "<td>{$comment_count}</td>";
+
+                $query_comments = "SELECT * FROM comments WHERE post_id = {$id}";
+                $comment_query = mysqli_query($connection, $query_comments);
+
+                $row = mysqli_fetch_assoc($comment_query);
+
+                $comment_count = mysqli_num_rows($comment_query);
+                echo "<td><a href='post_comments.php?id={$id}'>{$comment_count}</a></td>";
+                
                 echo "<td>{$views_count}</td>";
                 echo "<td>{$date}</td>";
                 echo "<td>

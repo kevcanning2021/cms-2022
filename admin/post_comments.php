@@ -1,4 +1,21 @@
-<table class="table table-bordered table-hover">
+<?php include "includes/admin_header.php"; ?>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <?php include "includes/admin_navigation.php"; ?>
+
+        <div id="page-wrapper">
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+            <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Welcome to Posts Comments
+                        <small>Author</small>
+                    </h1>
+                    <table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Id</th>
@@ -15,9 +32,9 @@
     </thead>
     <tbody>
         <?php
-            $query = "SELECT * FROM comments";
+            $query = "SELECT * FROM comments WHERE post_id = " . mysqli_real_escape_string($connection, $_GET['id']);
             $all_comments_query = mysqli_query($connection, $query);
-        
+
             while($row = mysqli_fetch_assoc($all_comments_query)) { 
                 $id = $row['id']; 
                 $post_id = $row['post_id']; 
@@ -56,7 +73,7 @@
 
                 echo "<td><a href='comments.php?unapprove={$id}'>Unapprove</a></td>";
                 echo "<td><a href='comments.php?approve={$id}'>Approve</a></td>";
-                echo "<td><a href='comments.php?delete={$id}'>Delete</a></td>";
+                echo "<td><a href='comments.php?delete={$id}&id=" . $_GET['id'] ."'>Delete</a></td>";
                 echo "</tr>";
             } ?>
     </tbody>
@@ -87,6 +104,14 @@ if(isset($_GET['unapprove'])) {
        $query = "DELETE FROM comments WHERE id = {$id}";
        $delete_query = mysqli_query($connection, $query);
        
-       header("Location: post_comments.php?delete={$id}&id=". $_GET['id'] . "");
+       header("Location: post_comments.php?id=" . $_GET['id'] . "");
     }
 ?>
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div>
+<!-- /.container-fluid -->
+    <!-- /#wrapper -->
+<?php include "includes/admin_footer.php"; ?>

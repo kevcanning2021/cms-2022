@@ -77,8 +77,8 @@
                         echo "<script>alert('Fields can not be empty.');</script>";
                     }
 
-                    $query = "UPDATE posts SET comment_count = comment_count + 1 ";
-                    $query .= "WHERE id = {$id}";
+                    // $query = "UPDATE posts SET comment_count = comment_count + 1 ";
+                    // $query .= "WHERE id = {$id}";
             
                     $update_comment_count = mysqli_query($connection, $query);
             
