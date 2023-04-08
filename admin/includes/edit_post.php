@@ -10,7 +10,7 @@ if(isset($_GET['p_id'])) {
                 while($row = mysqli_fetch_assoc($query_by_id)) { 
                     $id = $row['id']; 
                     $title = $row['title']; 
-                    $author = $row['author']; 
+                    $user = $row['user']; 
                     $category_id = $row['category_id']; 
                     $status = $row['status']; 
                     $image = $row['image']; 
@@ -21,7 +21,7 @@ if(isset($_GET['p_id'])) {
 
                 if(isset($_POST['edit_post'])) {
                     $title = $_POST['title']; 
-                    $author = $_POST['author']; 
+                    $user = $_POST['user']; 
                     $category_id = $_POST['category_id']; 
                     $status = $_POST['status']; 
 
@@ -47,7 +47,7 @@ if(isset($_GET['p_id'])) {
 
                     $query = "UPDATE posts SET ";
                     $query .= "title = '{$title}', ";
-                    $query .= "author = '{$author}', ";
+                    $query .= "user = '{$user}', ";
                     $query .= "category_id = '{$category_id}', ";
                     $query .= "date = now(), ";
                     $query .= "image = '{$image}', ";
@@ -92,8 +92,25 @@ if(isset($_GET['p_id'])) {
     </div>
 
     <div class="form-group">
-        <label for="author">Post Author</label>
-        <input type="text" class="form-control" name="author" value="<?php echo $author; ?>">
+        <label for="user">Post User</label>
+        <select name="user" id="" class="form-group form-control">
+        
+        <?php
+            echo "<option value='{$user}'>{$user}</option>";
+            
+            $query = "SELECT * FROM users";
+            $get_user_query = mysqli_query($connection, $query);
+
+            confirm_query($get_user_query);
+    
+            while($row = mysqli_fetch_assoc($get_user_query)) { 
+                $id = $row['id']; 
+                $username = $row['username']; 
+
+                echo "<option value='{$username}'>{$username}</option>";
+            }
+     ?>
+        </select>
     </div>
 
     <div class="form-group">

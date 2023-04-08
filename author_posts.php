@@ -15,13 +15,13 @@
                         $author = $_GET['author'];
                     }
 
-                    $query = "SELECT * FROM posts WHERE author = '{$author}'";
+                    $query = "SELECT * FROM posts WHERE user = '{$author}'";
                     $posts = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($posts)) {
                         $id = $row['id'];
                         $title = $row['title'];
-                        $author = $row['author'];
+                        $user = $row['user'];
                         $date = $row['date'];
                         $image = $row['image'];
                         $content = $row['content'];           
@@ -37,7 +37,7 @@
                 <a href="post.php?p_id=<?php echo $id; ?>"><?php echo $title; ?></a>
             </h2>
             <p class="lead">
-                All posts by <?php echo $author; ?>
+                All posts by <?php echo $user; ?>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $date; ?></p>
             <hr>
@@ -52,13 +52,13 @@
                 if(isset($_POST['create_comment'])) {
                     $id = $_GET['p_id'];
 
-                    $author = $_POST['author'];
+                    $user = $_POST['user'];
                     $email = $_POST['email'];
                     $comment = $_POST['comment'];
 
-                    if(!empty($author) && !empty($email) && !empty($comment)) {
-                        $query = "INSERT INTO comments (post_id, author, content, email, status, date) ";
-                        $query .= "VALUES ('{$id}', '{$author}', '{$comment}', '{$email}', 'unapproved', now())";
+                    if(!empty($user) && !empty($email) && !empty($comment)) {
+                        $query = "INSERT INTO comments (post_id, user, content, email, status, date) ";
+                        $query .= "VALUES ('{$id}', '{$user}', '{$comment}', '{$email}', 'unapproved', now())";
     
                         $create_query = mysqli_query($connection, $query);
                         

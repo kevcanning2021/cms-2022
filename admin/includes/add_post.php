@@ -1,7 +1,7 @@
 <?php
     if(isset($_POST['create_post'])) {
         $title = $_POST['title'];
-        $author = $_POST['author'];
+        $user = $_POST['user'];
         $category_id = $_POST['category_id'];
         $status = $_POST['status'];
         
@@ -15,8 +15,8 @@
 
         move_uploaded_file($image_tmp, "../images/$image");
 
-        $query = "INSERT INTO posts(category_id, title, author, date, image, content, tags, comment_count, status, views_count) ";
-        $query .= "VALUES ('{$category_id}','{$title}', '{$author}',now(),'{$image}', '{$content}','{$tags}', '{$comment_count}', '{$status}', 0)";
+        $query = "INSERT INTO posts(category_id, title, user, date, image, content, tags, comment_count, status, views_count) ";
+        $query .= "VALUES ('{$category_id}','{$title}', '{$user}',now(),'{$image}', '{$content}','{$tags}', '{$comment_count}', '{$status}', 0)";
         
         $create_post = mysqli_query($connection, $query);
 
@@ -55,8 +55,8 @@
     </div>
 
     <div class="form-group">
-        <label for="users">Post User</label>
-        <select name="users" id="" class="form-group form-control">
+        <label for="user">Post User</label>
+        <select name="user" id="" class="form-group form-control">
         
         <?php
             $query = "SELECT * FROM users";
@@ -68,7 +68,7 @@
                 $id = $row['id']; 
                 $username = $row['username']; 
 
-                echo "<option value='{$id}'>{$username}</option>";
+                echo "<option value='{$username}'>{$username}</option>";
             }
      ?>
         </select>
