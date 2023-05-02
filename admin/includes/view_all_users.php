@@ -47,7 +47,7 @@
 
 <?php
 if (isset($_GET['change_to_admin'])) {
-    $id = $_GET['change_to_admin'];
+    $id = escape($_GET['change_to_admin']);
 
     $query = "UPDATE users SET role = 'admin' WHERE id = {$id}";
     $change_admin_query = mysqli_query($connection, $query);
@@ -56,7 +56,7 @@ if (isset($_GET['change_to_admin'])) {
 }
 
 if (isset($_GET['change_to_subscriber'])) {
-    $id = $_GET['change_to_subscriber'];
+    $id = escape($_GET['change_to_subscriber']);
 
     $query = "UPDATE users SET role = 'subscriber' WHERE id = {$id}";
     $change_subscriber_query = mysqli_query($connection, $query);
@@ -67,7 +67,7 @@ if (isset($_GET['change_to_subscriber'])) {
 if (isset($_GET['delete'])) {
     if (isset($_SESSION['user_role'])) {
         if ($_SESSION['user_role'] == 'admin') {
-            $id = $_GET['delete'];
+            $id = escape($_GET['delete']);
 
             $query = "DELETE FROM users WHERE id = {$id}";
             $delete_query = mysqli_query($connection, $query);

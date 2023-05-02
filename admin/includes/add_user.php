@@ -1,10 +1,10 @@
 <?php
     if(isset($_POST['create_user'])) {
-        $username = $_POST['username'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $username = escape($_POST['username']);
+        $firstname = escape($_POST['firstname']);
+        $lastname = escape($_POST['lastname']);
+        $email = escape($_POST['email']);
+        $password = escape($_POST['password']);
 
         $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
         

@@ -94,10 +94,9 @@ if(isset($_GET['p_id'])) {
     <div class="form-group">
         <label for="user">Post User</label>
         <select name="user" id="" class="form-group form-control">
-        
         <?php
             echo "<option value='{$user}'>{$user}</option>";
-            
+        
             $query = "SELECT * FROM users";
             $get_user_query = mysqli_query($connection, $query);
 

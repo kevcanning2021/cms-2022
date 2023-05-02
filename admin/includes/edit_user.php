@@ -21,12 +21,12 @@ if(isset($_GET['u_id'])) {
                 }
 
                 if(isset($_POST['edit_user'])) {
-                    $username = $_POST['username']; 
-                    $firstname = $_POST['firstname']; 
-                    $lastname = $_POST['lastname']; 
-                    $email = $_POST['email']; 
-                    $password = $_POST['password']; 
-                    $role = $_POST['role']; 
+                    $username = escape($_POST['username']); 
+                    $firstname = escape($_POST['firstname']); 
+                    $lastname = escape($_POST['lastname']); 
+                    $email = escape($_POST['email']); 
+                    $password = escape($_POST['password']); 
+                    $role = escape($_POST['role']); 
 
                     if(!empty($password)) {
                         $get_user = mysqli_query($connection, $query);

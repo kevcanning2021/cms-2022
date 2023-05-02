@@ -65,7 +65,7 @@
         <tr>
             <th><input type="checkbox" id="select_boxes"></th>
             <th>Id</th>
-            <th>Author</th>
+            <th>User</th>
             <th>Category</th>
             <th>Status</th>
             <th>Image</th>
@@ -99,7 +99,7 @@
 
                 if(isset($author) || !empty($author)){
                     echo "<td>{$author}</td>";
-                } else if(isset($user) || !empty($user)){
+                } else if(!empty($user)){
                     echo "<td>{$user}</td>";
                 }
 
@@ -109,7 +109,7 @@
                 $category_query = mysqli_query($connection, $query);
         
                 while($row = mysqli_fetch_assoc($category_query)) { 
-                    $title = $row['title']; 
+                    $title = escape($row['title']); 
 
                     echo "<td>{$title}</td>";
                 }
@@ -142,7 +142,7 @@
 
 <?php 
     if(isset($_GET['delete'])) {
-       $id = $_GET['delete'];
+       $id = escape($_GET['delete']);
        
        $query = "DELETE FROM posts WHERE id = {$id}";
        $delete_query = mysqli_query($connection, $query);
@@ -151,7 +151,7 @@
     }
     
     if(isset($_GET['reset_post_count'])) {
-        $id = $_GET['reset_post_count'];
+        $id = escape($_GET['reset_post_count']);
         
         $query = "UPDATE posts SET views_count = 0 WHERE id =" . mysqli_real_escape_string($connection, $_GET['reset_post_count']);
         $reset_query = mysqli_query($connection, $query);

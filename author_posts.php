@@ -16,6 +16,7 @@
                     }
 
                     $query = "SELECT * FROM posts WHERE user = '{$author}'";
+                    
                     $posts = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($posts)) {
